@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" LANG="ko"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><!-- <- 타입립 요거 아까의존성 추가한거 빌드코끼리가서 주소 비교해보삼 -->
+<head>
+    <meta charset="UTF-8">
+    <title>레이아웃</title>
+    <!-- 스프링 시큐리티에서 사용하는 CSRF 토큰을 메타태그로 추가합니다. -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Global css 즉, 전역으로 사용할 css 파일을 추가 합니다. 글로벌은 위에 적고 특정컨텐트에서 쓸거는 아래에다 적는다. -->
+    <link th:href="@{/css/layout1.css}" rel="stylesheet">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- 컨텐트 페이지에서 정의한 스크립트와 스타일시트를 추가할 수 있는 블록 / 특정 컨텐츠에서 사용할거 여기 아래에다 적는다.-->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body>
+<!-- 외부의 헤더 영역을 가져와서 삽입-->
+<!--    1. th:replace 속성을 사용하면 외부의 템플릿을 가져와서 삽입할 수 있습니다.
+        2. ~{템플릿경로(디렉토리)::템플릿 이름} 형식으로 사용합니다.
+        3. fragment : 템플릿 경로는 templates 아래의 fragments 디렉토리를 기준으로 작성합니다.
+        4. /header : fragment 디렉토리 아래의 header.html 파일을 가리킵니다.
+        5. :: -> 프레그먼트 이름을 가리키는 기호입니다.
+        6. 뒤의 header : header.html에 정의되어 있는 프레그먼트 이름입니다.
+              ※※※그니까 헤더 + 더블콜론 + 헤더는  앞은 파일이름 뒤는 프레그먼트 이름 ㅇㅋ?!!!
+                이해가 안된다면 header.html 로 가서 주석보고 이해해보자!
+ -->
+
+<div th:replace="~{fragments/header::header}"></div>
+
+<!-- 컨텐트 페이지에서 정의한 컨텐트 영역을 삽입할 블록 -->
+<!--    1. layout:fragment 속성을 사용하면 레이아웃 템플릿에 정의된 블록에 컨텐트를 삽입할 수 있습니다.
+        2. layout:fragment="content" : 레이아웃 템플릿에 정의된 content(이름) 블록에 컨텐트를 삽입합니다. ※※※그럼 저쪽에서 여기에 넣어줄 컨텐트의 이름이 content 이겠지? !!!!
+        3. class="content" : content 블록에 적용할 클래스입니다. -->
+<div layout:fragment="content" class="content"></div>
+
+<div th:replace="~{fragments/footer::footer}"></div>
+
+<!-- 컨텐츠 페이지에서 정의한 스크립트가 삽입될 위치 css 는 그대로 두고 스크립트는 바디가 끝나는 부분으로 따로 빼 놓았다. 왜? 몰? 루? -->
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>

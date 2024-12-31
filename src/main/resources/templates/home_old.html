@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+<header>
+    <h1 th:text="'Welcome to ' + ${appName} + '!'">Welcome to Thymeleaf!</h1>
+</header>
+<main>
+    <p th:text="'Today is ' + ${currentDate} + '.'">Today is...</p>
+    <p th:text="'Today is ' + ${currentDate} + '.'">Today is...</p>
+    <p th:text="'Today is ' + ${currentDate} + '.'">Today is...</p>
+    <p th:text="'Today is ' + ${currentDate} + '.'">Today is...</p>
+    <p>This page is rendered with Thymeleaf.</p>
+</main>
+<footer>
+    <p>&copy; 2024 Thymeleaf Application</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 목록</title>
+</head>
+<body>
+<header>
+    <h1 >상품 목록</h1>
+</header>
+<main>
+    <table border="1">
+        <thead>
+        <tr>
+            <!--<th>홀짝구분</th>-->
+            <th>순번</th>
+            <th>상품 코드</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>재고수량</th>
+            <th>상품 상세 설명</th>
+            <th>상품 판매 상태</th>
+            <th>등록 시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, status : ${items}">
+            <!--<td th:if="${status.odd}">홀수</td>
+            <td th:if="${status.even}">짝수</td>-->
+
+            <!-- 일종의 삼항연산자  -->
+            <!--<td th:text="${status.odd} ? '홀수' : '짝수'"></td>-->
+
+            <!-- if else문이라고 생각하면 된다. odd로 둘다 똑같음 -->
+            <!--<td th:if="${status.odd}">홀수</td>
+            <td th:unless="${status.odd}">짝수</td> -->
+
+            <td th:text="${status.index + 1}"></td>
+            <td th:text="${item.id}"></td>
+            <!--<td th:text="${item.itemNm}"></td>--> <!-- 아래에 새로운 방식으로 수정!! -> 리스트에서 상품명 클릭하면 해당상품 view로 이동하게 수정  -->
+
+            <!--<td>
+                <a th:href="@{/view(id=${item.id})}" th:text="${item.itemNm}"></a>
+            </td>-->
+
+            <td>
+                <!-- 경로 변수로 값을 전달할때는 인코딩 필요 /view/{id}(id=${item.id}) -->
+                <a th:href="@{/view/{id}(id=${item.id})}" th:text="${item.itemNm}"></a> <!-- PathVariavle 형태 -->
+            </td>
+
+            <td th:text="${item.price}"></td>
+            <td th:text="${item.stockNumber}"></td>
+            <td th:text="${item.itemDetail}"></td>
+            <td th:text="${item.itemSellStatus}"></td>
+            <td th:text="${#temporals.format(item.regTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<footer>
+    <p>&copy; 2024 Thymeleaf Application</p>
+</footer>
+</body>
+</html>

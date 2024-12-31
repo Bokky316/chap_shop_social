@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+        <!-- 여기 페이지에서만 사용하는 css 정의
+        fragment="css" css(이름) 하고 layout1.html에
+        <th:block layout:fragment="css"></th:block>에 css가 이름이 같아야 한다.  -->
+        <th:block layout:fragment="css">
+            <link rel="stylesheet" href="/css/content01.css">
+        </th:block>
+
+    <div layout:fragment="content">
+        <!-- 1. layout:decorate="~{layouts/layout1}" : layout1 파일을 레이아웃으로 사용한다.
+                - ~{layouts : templates/layouts 디렉토리(폴더이름이라는 뜻)
+                - 뒤에있는 layout1 : layout1.html 파일자체를 얘기하는거임
+                layout1.html 파일을 이용하여 이 컨텐트 페이지를 레이아웃한다.
+             2. div 안에 있는 layout:fragment="content" : layout1.html 파일의 content 영역에 여기의 내용을 삽입하겠다. -->
+
+        <h1>컨텐츠 페이지</h1>
+        <p id="test-paragraph">이 문장은 JavaScript로 스타일이 변경됩니다.</p>
+        <button class="custom-button" id="test-button">클릭하세요</button>
+    </div>
+
+    <!-- 여기 페이지에서만 사용하는 css 정의
+    스크립트도 css랑 마찬가지임 여기 script 이름하고 layout에 있는 script 이름이 같아야함-->
+    <th:block layout:fragment="script">
+        <script src="/js/content01.js"></script>
+    </th:block>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 상세 정보</title>
+</head>
+<body>
+<header>
+    <h1 >상품 상세 정보</h1>
+</header>
+<main>
+    <table border="1">
+        <tr>
+            <th>상품 코드</th>
+            <td th:text="${item.id}">상품 ID</td>
+        </tr>
+        <tr>
+            <th>상품 이름</th>
+            <td th:text="${item.itemNm}">상품 이름</td>
+        </tr>
+        <tr>
+            <th>상품 가격</th>
+            <td th:text="${item.price}">상품 가격</td>
+        </tr>
+        <tr>
+            <th>상품 설명</th>
+            <td th:text="${item.itemDetail}">상품 설명</td>
+        </tr>
+        <tr>
+            <th>재고 수량</th>
+            <td th:text="${item.stockNumber}">재고 수량</td>
+        </tr>
+        <tr>
+            <th>상품 판매 상태</th>
+            <td th:text="${item.itemSellStatus}">상품 판매 상태</td>
+        </tr>
+        <tr>
+            <th>등록일</th>
+            <td th:text="${#temporals.format(item.regTime, 'yyyy-MM-dd HH:mm:ss')}">등록일</td>
+        </tr>
+    </table>
+    <div th:text="${param1}"></div>
+</main>
+<footer>
+    <p>&copy; 2024 Thymeleaf Application</p>
+</footer>
+</body>
+</html>

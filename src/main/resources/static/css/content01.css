@@ -1,0 +1,27 @@
+/* 컨텐트 페이지 전용 CSS */
+#test-paragraph {
+    color: #333;
+    font-size: 18px;
+    line-height: 1.5;
+    transition: background-color 0.3s ease; /* 배경색 전환 효과 */
+}
+
+.custom-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 색상 전환 효과 */
+}
+
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+.highlight {
+    background-color: yellow;
+    font-weight: bold;
+}

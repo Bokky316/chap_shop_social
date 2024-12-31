@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <link rel="stylesheet" href="/css/main.css">
+</th:block>
+
+<div layout:fragment="content">
+<!--
+<div id="carouselControls" class="carousel slide margin" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active item">
+                <img class="d-block w-100 banner" src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png" alt="First slide">
+            </div>
+        </div>
+    </div>
+-->
+    <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
+        <div class="carousel-inner">
+            <!-- 첫 번째 배너 이미지 -->
+            <div class="carousel-item active item">
+                <img class="d-block w-100 banner" th:src="@{/static-images/banner_1.jpg}" alt="First slide">
+            </div>
+            <!-- 두 번째 배너 이미지 -->
+            <div class="carousel-item item">
+                <img class="d-block w-100 banner" th:src="@{/static-images/banner_2.jpg}" alt="Second slide">
+            </div>
+            <!-- 세 번째 배너 이미지 -->
+            <div class="carousel-item item">
+                <img class="d-block w-100 banner" th:src="@{/static-images/banner_3.jpg}" alt="Second slide">
+            </div>
+        </div>
+        <!-- 좌우 화살표 추가 -->
+        <a class="carousel-control-prev" href="#carouselControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <!-- 검색 쿼리를 숨겨진 입력 필드로 전달 -->
+    <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
+
+    <!-- 검색 쿼리가 비어있지 않을 때만 결과 메시지를 표시 -->
+    <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
+        <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + '검색 결과'"></p>
+    </div>
+
+    <div class="row">
+        <!-- items의 내용을 반복하여 각 아이템을 카드 형태로 표시 -->
+        <th:block th:each="item, status: ${items.getContent()}">
+            <div class="col-md-4 margin">
+                <div class="card">
+                    <!-- 아이템 상세 페이지로 링크를 설정 -->
+                    <a th:href="'/item/' +${item.id}" class="text-dark">
+                        <!-- 아이템 이미지 표시 -->
+                        <img th:src="${item.imgUrl}" class="card-img-top" th:alt="${item.itemNm}" height="400">
+                        <div class="card-body">
+                            <!-- 아이템 이름 표시 -->
+                            <h4 class="card-title">[[${item.itemNm}]]</h4>
+                            <!-- 아이템 설명 표시 -->
+                            <p class="card-text">[[${item.itemDetail}]]</p>
+                            <!-- 아이템 가격 표시, 텍스트 색상을 빨간색으로 설정 -->
+                            <h3 class="card-title text-danger">[[${item.price}]]원</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <!-- 페이지네이션을 위한 시작과 끝 페이지 계산 -->
+    <div th:with="start=${(items.number/maxPage)*maxPage + 1}, end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})">
+        <ul class="pagination justify-content-center">
+
+            <!-- 이전 페이지 버튼, 현재 페이지가 첫 페이지일 경우 비활성화 -->
+            <li class="page-item" th:classappend="${items.number eq 0}?'disabled':''">
+                <a th:href="@{'/' + '?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number-1}}" aria-label='Previous' class="page-link">
+                    <span aria-hidden='true'>Previous</span>
+                </a>
+            </li>
+
+            <!-- 페이지 번호 생성 및 표시 -->
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${items.number eq page-1}?'active':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+
+            <!-- 다음 페이지 버튼, 현재 페이지가 마지막 페이지일 경우 비활성화 -->
+            <li class="page-item" th:classappend="${items.number+1 ge items.totalPages}?'disabled':''">
+                <a th:href="@{'/' +'?searchQuery=' + ${itemSearchDto.searchQuery} + '&page=' + ${items.number+1}}" aria-label='Next' class="page-link">
+                    <span aria-hidden='true'>Next</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+</div>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" LANG="ko"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="header">
+        <!-- th:fragment 속성을 사용하여 header 영역을 정의합니다.
+                이렇게 프레그먼트를 정의해 놓으면 다른 템플릿에서 th:replace 속성을 사용하여
+                이 프레그먼트를 가져다 사용할 수 있습니다.
+
+                헤더라는 이름으로 프레그먼트를 정의해놓은 거임!!!!! 디브태그 안에 있는게 프레그먼트임!!!!
+                -->
+        <nav class="navbar navbar-expand-lg bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" href="http://localhost:8080/">Shop</a>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <a class="nav-link active" aria-current="page" th:href="@{/admin/item/new}">상품등록</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                            <a class="nav-link active" aria-current="page" th:href="@{/admin/items}">상품관리</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/cart}">장바구니</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/orders}">구매이력</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAnonymous()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/members/login}">로그인</a>
+                        </li>
+                        <li class="nav-item" sec:authorize="isAuthenticated()">
+                            <a class="nav-link active" aria-current="page" th:href="@{/members/logout}">로그아웃</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex ml-auto" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</html>
